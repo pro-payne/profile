@@ -4,7 +4,7 @@
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      var target = $(this.hash);
+      let target = $(this.hash);
       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
       if (target.length) {
         $('html, body').animate({
@@ -24,5 +24,38 @@
   $('body').scrollspy({
     target: '#sideNav'
   });
+
+  $('#contact-me').submit(function(event) {
+    event.preventDefault();
+
+    const form = $(this).serialize()
+    const btn = $('#send-btn')
+    
+    $.ajax({
+      url: './email.php',
+      method: 'post',
+      dataType: 'json',
+      data: form,
+      beforeSend: function(){
+        btn.attr('disabled', true)
+        btn.html('Sending...')
+      },
+      error: function(){
+        btn.attr('disabled', false)
+        btn.html('Send')        
+      },
+      success: function(response){
+        if(response.success){
+          btn.html('Sent');
+          setTimeout(function(){
+            btn.html("Send")
+          }, 2000)
+        }else{
+          btn.html("Send")
+          btn.attr('disabled', false)
+        }
+      }
+    })
+  })
 
 })(jQuery); // End of use strict

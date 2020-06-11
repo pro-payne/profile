@@ -1,25 +1,22 @@
 <?php
-//var_dump($_POST); return;
+// var_dump($_POST); return;
 //if (isset($_POST['submit']))
-if (empty($_POST))
-{
-	//this page should not be accessed directly.Need to submit the form.
-	echo "error;  you need to submit the form!";
+$results = ['success' => false];
 
-} else{
-	if (isset($_POST["submit"])){
-		$to_email = "ayabongapayne@gmail.com";
-		$from_email = $_POST["from_email"];
-		$subject = $_POST["subject"];
-		$message = $_POST["message"];
-  		
-  		//mail('ayabongapayne@gmail.com',$from_email, $subject, $message);
-  		//header('submit');
+if (isset($_POST["from_email"]) && isset($_POST["subject"]) && isset($_POST["message"])){
+	$to_email = "ayabongapayne@gmail.com";
+	$from_email = $_POST["from_email"];
+	$subject = $_POST["subject"];
+	$message = $_POST["message"];
+	
+	try{
 		if ( mail($to_email,$from_email, $subject, $message)){
-			echo ("email successfully sent to $to_email.....");
-		} else {
-			echo ("Email sending failed.....");
-		}
-	}
+			$results['success'] = true;			
+		}		
+	}catch(Exception $e){
+		echo json_encode($results);
+		return;
+	}	
 }
-?>
+
+echo json_encode($results);
