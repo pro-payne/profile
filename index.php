@@ -128,7 +128,7 @@
                                    </ul>
                                  </div>
                                  <div class="resume-date text-md-right">
-                                  <span class="text-primary">April 2017 - Present</span>
+                                  <span class="text-primary">April 2016 - Present</span>
                                 </div>
                               </div>
                             </div>
